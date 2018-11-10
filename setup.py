@@ -82,9 +82,7 @@ setup(
     description='Python implementation (with optional cpp extensions)'
                 ' of ARTM algorithm',
     long_description='',
-    # add extension module
     ext_modules=[CMakeExtension('artm')],
-    # add custom build_ext command
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
     install_requires=requirements,

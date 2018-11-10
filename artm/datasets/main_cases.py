@@ -11,10 +11,10 @@ from artm.datasets import twitter_sentiment140
 ARTM_DIR = os.path.dirname(os.path.realpath(datasets.__file__))
 ARTM_RESOURCES = os.path.join(ARTM_DIR, 'resources')
 NIPS_PATH = os.path.join(
-    os.path.expanduser('~'), 'artm_data', 'NIPS_1987-2015.csv'
+    os.path.expanduser('~'), 'artm-datasets', 'NIPS.csv'
 )
 TWITTER_SENTIMENT140_PATH = os.path.join(
-    os.path.expanduser('~'), 'artm_data', 'training.1600000.processed.noemoticon.csv'
+    os.path.expanduser('~'), 'artm-datasets', 'twitter-sentiment140.csv'
 )
 
 
