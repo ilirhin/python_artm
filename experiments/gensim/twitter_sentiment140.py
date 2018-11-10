@@ -28,7 +28,7 @@ if __name__ == '__main__':
         model = LdaModel(
             train_corpus,
             alpha='auto', id2word=num_2_token,
-            num_topics=T, iterations=500, random_state=seed
+            num_topics=T, iterations=5, random_state=seed
         )
         gensim_phi = exp_common.get_phi(model)
         gensim_theta = exp_common.get_theta(train_corpus, model)
@@ -44,7 +44,7 @@ if __name__ == '__main__':
             np.ones(shape=(D, T)).astype(np.float64)
         )
         phi, theta = default.Optimizer(
-            [regularizers.Additive(0.1, 0.)] * 100,
+            [regularizers.Additive(0.2, 0.2)] * 100,
             verbose=False
         ).run(
             train_n_dw_matrix, phi, theta
