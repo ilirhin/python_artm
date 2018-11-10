@@ -1,0 +1,5 @@
+.idea
+*.pyc
+build/
+Release/
+python_artm.egg-info/
