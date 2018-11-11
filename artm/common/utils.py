@@ -29,11 +29,7 @@ def get_prob_matrix_by_counters(counters, inplace=False):
 def calc_doc_occurrences(n_dw_matrix):
     matrix = (scipy.sparse.csc_matrix(n_dw_matrix) > 0).astype(int)
     co_occurrences = matrix.T * matrix
-    size = co_occurrences.shape[0]
-    return (
-        np.array(co_occurrences[np.diag_indices(size)]).reshape(size),
-        co_occurrences
-    )
+    return co_occurrences.diagonal(), co_occurrences
 
 
 def pairwise_counters_2_sparse_matrix(cooccurences):

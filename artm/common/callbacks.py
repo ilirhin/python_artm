@@ -8,7 +8,28 @@ from artm.calculations import metrics
 from artm.common.timers import SimpleTimer
 
 
-class Callback(object):
+def save_results(result_obj, output_path):
+    if not os.path.exists(os.path.dirname(output_path)):
+        os.makedirs(os.path.dirname(output_path))
+    with open(output_path, 'w') as output_file:
+        pickle.dump(result_obj, output_file)
+
+
+class Basic(object):
+    def start_launch(self):
+        pass
+
+    def finish_launch(self):
+        pass
+
+    def __call__(self, it, phi, theta):
+        raise NotImplementedError()
+
+    def save_results(self, output_path):
+        pass
+
+
+class Callback(Basic):
     def __init__(self, metrics):
         self.metrics = metrics
         self.result = defaultdict(list)
@@ -20,16 +41,14 @@ class Callback(object):
     def finish_launch(self):
         for name, values in self.launch_result.iteritems():
             self.result[name].append(values)
+        self.launch_result = None
 
     def __call__(self, it, phi, theta):
         for name, metric in self.metrics.iteritems():
             self.launch_result[name].append(metric(it, phi, theta))
 
     def save_results(self, output_path):
-        if not os.path.exists(os.path.dirname(output_path)):
-            os.makedirs(os.path.dirname(output_path))
-        with open(output_path, 'w') as output_file:
-            pickle.dump(self.result, output_file)
+        save_results(self.result, output_path)
 
 
 class TimedCallback(Callback):
@@ -108,6 +127,18 @@ class Builder(object):
         self.metrics[
             'uniqueness_measure'
         ] = lambda it, phi, theta: metrics.calc_phi_uniqueness_measures(phi)
+        return self
+
+    def phi(self):
+        self.metrics[
+            'phi'
+        ] = lambda it, phi, theta: phi
+        return self
+
+    def theta(self):
+        self.metrics[
+            'theta'
+        ] = lambda it, phi, theta: theta
         return self
 
     def build(self):

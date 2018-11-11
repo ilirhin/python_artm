@@ -11,7 +11,10 @@ def default_callback(
     top_pmi_sizes=None,
     top_avg_jacard_sizes=None,
     uniqueness_measures=False,
-    measure_time=False
+    measure_time=False,
+    forced_occurrences_co_occurrences_tuple=None,
+    collect_phi=False,
+    collect_theta=False
 ):
     builder = callbacks.Builder(measure_time=measure_time) \
         .sparsity() \
@@ -27,7 +30,10 @@ def default_callback(
         builder = builder.perplexity('test_perplexity', test_n_dw_matrix)
         n_dw_matrix += test_n_dw_matrix
     if top_pmi_sizes is not None:
-        occurrences, co_occurrences = common.calc_doc_occurrences(n_dw_matrix)
+        if forced_occurrences_co_occurrences_tuple is None:
+            occurrences, co_occurrences = common.calc_doc_occurrences(n_dw_matrix)
+        else:
+            occurrences, co_occurrences = forced_occurrences_co_occurrences_tuple
         builder = builder.top_pmi(
             occurrences, co_occurrences,
             n_dw_matrix.shape[0], top_pmi_sizes
@@ -37,7 +43,10 @@ def default_callback(
             builder = builder.top_avg_jacard(top_size)
     if uniqueness_measures:
         builder = builder.uniqueness_measure()
-
+    if collect_phi:
+        builder = builder.phi()
+    if collect_theta:
+        builder = builder.theta()
     return builder.build()
 
 

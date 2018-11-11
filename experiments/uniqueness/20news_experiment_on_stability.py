@@ -56,7 +56,7 @@ if __name__ == '__main__':
     print('Original PLSA')
     perform_lda(
         n_dw_matrix, optimizer=get_optimizer(0., 100), T=10,
-        samples=300, output_path='uniqueness_stability/plsa.pkl'
+        samples=300, output_path='stability_exp/plsa.pkl'
     )
 
     print('Full initialized PLSA')
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     )
     perform_lda(
         n_dw_matrix, optimizer=get_optimizer(0., 100), T=10,
-        samples=300, output_path='uniqueness_stability/full_initialized_plsa.pkl',
+        samples=300, output_path='stability_exp/full_initialized_plsa.pkl',
         init_phi=init_phi, init_theta=init_theta
     )
 
@@ -80,12 +80,12 @@ if __name__ == '__main__':
 
     perform_lda(
         synthetic_n_dw_matrix, optimizer=get_optimizer(0., 100), T=10,
-        samples=100, output_path='uniqueness_stability/synthetic_plsa.pkl'
+        samples=100, output_path='stability_exp/synthetic_plsa.pkl'
     )
 
     print('Full initialized synthetic PLSA')
     perform_lda(
         synthetic_n_dw_matrix, optimizer=get_optimizer(0., 100), T=10,
-        samples=100, output_path='uniqueness_stability/full_initialized_synthetic_plsa.pkl',
+        samples=100, output_path='stability_exp/full_initialized_synthetic_plsa.pkl',
         init_phi=init_phi, init_theta=init_theta
     )

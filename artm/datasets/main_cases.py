@@ -2,6 +2,8 @@ import pickle
 import os
 
 from sklearn.datasets import fetch_20newsgroups
+import numpy as np
+import scipy.sparse
 
 from artm import datasets
 from artm.datasets import sklearn_dataset
@@ -16,6 +18,9 @@ NIPS_PATH = os.path.join(
 TWITTER_SENTIMENT140_PATH = os.path.join(
     os.path.expanduser('~'), 'artm-datasets', 'twitter-sentiment140.csv'
 )
+WNTM_MATRIX_DIR_PATH = os.path.join(
+    os.path.expanduser('~'), 'artm-datasets', 'wntm_matrix'
+)
 
 
 def set_nips_path(path):
@@ -26,6 +31,11 @@ def set_nips_path(path):
 def set_twitter_sentiment140_path(path):
     global TWITTER_SENTIMENT140_PATH
     TWITTER_SENTIMENT140_PATH = path
+
+
+def set_wntm_matrix_path(path):
+    global WNTM_MATRIX_DIR_PATH
+    WNTM_MATRIX_DIR_PATH = path
 
 
 if not os.path.exists(ARTM_RESOURCES):
@@ -94,3 +104,22 @@ def get_twitter_sentiment140(
         with open(path, 'w') as resource_file:
             pickle.dump(data, resource_file)
     return data
+
+
+def get_wntm_matrix(wntm_matrix_dir=WNTM_MATRIX_DIR_PATH):
+    path = get_resource_path('wntm_matrix_{}.pkl'.format(
+        os.path.realpath(wntm_matrix_dir).replace(os.path.sep, '_'),
+    ))
+    if os.path.exists(path):
+        with open(path, 'r') as resource_file:
+            n_dw_matrix = pickle.load(resource_file)
+    else:
+        data = np.load(os.path.join(wntm_matrix_dir, 'data.npy'))
+        indices = np.load(os.path.join(wntm_matrix_dir, 'indices.npy'))
+        indptr = np.load(os.path.join(wntm_matrix_dir, 'indptr.npy'))
+
+        n_dw_matrix = scipy.sparse.csr_matrix((data, indices, indptr))
+        n_dw_matrix.eliminate_zeros()
+        with open(path, 'w') as resource_file:
+            pickle.dump(n_dw_matrix, resource_file)
+    return n_dw_matrix
