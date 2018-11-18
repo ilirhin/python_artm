@@ -1,8 +1,9 @@
+from builtins import range
+
 import numpy as np
 import scipy.sparse
 
 from artm import EPS
-from artm import range
 
 
 def get_docptr(n_dw_matrix):

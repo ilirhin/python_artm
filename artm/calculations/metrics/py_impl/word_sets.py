@@ -1,6 +1,6 @@
-import numpy as np
+from builtins import range
 
-from artm import range
+import numpy as np
 
 
 def calc_jacard_distance(fst_set, snd_set):

@@ -1,16 +1,12 @@
 from __future__ import print_function
 
+from builtins import zip
 import random
 from collections import Counter
 
 import scipy.sparse
 import gensim
 from nltk.corpus import stopwords
-
-try:
-    import itertools.izip as zip
-except ImportError:
-    pass
 
 
 def prepare(

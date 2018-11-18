@@ -1,6 +1,6 @@
-import numpy as np
+from builtins import range
 
-from artm import range
+import numpy as np
 
 
 def calc_phi_uniqueness_measures(phi):

@@ -1,6 +1,6 @@
-import numpy as np
+from builtins import range
 
-from artm import range
+import numpy as np
 
 
 def create_pmi_top_function(
