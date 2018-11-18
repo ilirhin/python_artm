@@ -3,3 +3,4 @@ tornado
 ipykernel
 jupyter
 git-pre-commit-hook
+matplotlib

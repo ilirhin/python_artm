@@ -107,7 +107,7 @@ class Builder(object):
 
     def sparsity(self):
         self.metrics[
-            'sparsity'
+            'phi_sparsity'
         ] = lambda it, phi, theta: 1. * np.sum(phi == 0) / np.sum(phi >= 0)
         return self
 

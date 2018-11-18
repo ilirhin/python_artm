@@ -1,4 +1,4 @@
-# coding: utf-8
+from __future__ import print_function
 
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
@@ -12,7 +12,7 @@ def create_svm_score_function(
     C_range=None, gamma_range=None
 ):
     if C_range is None:
-        C_range = [1e-1, 1e0, 1e1, 1e2, 1e3, 1e4]
+        C_range = [1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3]
     if gamma_range is None:
         gamma_range = [1e-3, 1e-2, 1e-1, 1, 1e1]
 
@@ -37,12 +37,12 @@ def create_svm_score_function(
                 test_score = accuracy_score(y_test, algo.predict(X_test))
                 if verbose:
                     log_msg = 'SVM(C={}, gamma={}) cv-score: {}  test-score: {}'
-                    print log_msg.format(
+                    print(log_msg.format(
                         C,
                         gamma,
                         round(val, 3),
                         round(test_score, 3)
-                    )
+                    ))
                 if val > best_val:
                     best_val = val
                     best_C = C
@@ -53,12 +53,12 @@ def create_svm_score_function(
                     '\n\n\nBest cv params: C={}, gamma={}'
                     + '\nCV score: {}\nTest score:{}'
             )
-            print log_msg.format(
+            print(log_msg.format(
                 best_C,
                 best_gamma,
                 round(best_val, 3),
                 round(best_cv_algo_score_on_test, 3)
-            )
+            ))
         return best_C, best_gamma, best_val, best_cv_algo_score_on_test
 
     return func
