@@ -19,7 +19,7 @@ if __name__ == '__main__':
         'sci.electronics',
         'sci.med',
         'sci.space'
-    ], train_test_split=0.8)
+    ], train_proportion=0.8)
     manager.perform_experiment(
         train_n_dw_matrix, test_n_dw_matrix, 10, num_2_token
     )

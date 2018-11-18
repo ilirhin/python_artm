@@ -14,7 +14,7 @@ if __name__ == '__main__':
         'sci.electronics',
         'sci.med',
         'sci.space'
-    ], train_test_split=0.8)[:2]
+    ], train_proportion=0.8)[:2]
     args_list = list()
     phi_alpha = -0.1
     for T in range(3, 16):

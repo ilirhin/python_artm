@@ -14,7 +14,7 @@ SAMPLES = 20
 
 if __name__ == '__main__':
     train_n_dw_matrix, test_n_dw_matrix = main_cases.get_twitter_sentiment140(
-        test_proportion=0.8
+        train_proportion=0.8
     )[:2]
 
     args_list = list()

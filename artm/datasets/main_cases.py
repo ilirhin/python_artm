@@ -46,9 +46,9 @@ def get_resource_path(name):
     return os.path.join(ARTM_RESOURCES, name)
 
 
-def get_20newsgroups(categories, min_occurrences=3, train_test_split=None, subset='all'):
+def get_20newsgroups(categories, min_occurrences=3, train_proportion=None, subset='all'):
     path = get_resource_path('20newsgroups_subset_{}_{}_{}_{}.pkl'.format(
-        subset, min_occurrences, train_test_split,
+        subset, min_occurrences, train_proportion,
         '_'.join(sorted(categories)))
     )
     if os.path.exists(path):
@@ -62,35 +62,35 @@ def get_20newsgroups(categories, min_occurrences=3, train_test_split=None, subse
                 remove=('headers', 'footers', 'quotes')
             ),
             min_occurrences=min_occurrences,
-            train_test_split=train_test_split
+            train_proportion=train_proportion
         )
         with open(path, 'w') as resource_file:
             pickle.dump(data, resource_file)
     return data
 
 
-def get_nips(test_proportion=None, dataset_path=NIPS_PATH):
+def get_nips(train_proportion=None, dataset_path=NIPS_PATH):
     path = get_resource_path('nips_{}_{}.pkl'.format(
         os.path.realpath(dataset_path).replace(os.path.sep, '_'),
-        test_proportion
+        train_proportion
     ))
     if os.path.exists(path):
         with open(path, 'r') as resource_file:
             data = pickle.load(resource_file)
     else:
-        data = nips.prepare(dataset_path, test_proportion=test_proportion)
+        data = nips.prepare(dataset_path, train_proportion=train_proportion)
         with open(path, 'w') as resource_file:
             pickle.dump(data, resource_file)
     return data
 
 
 def get_twitter_sentiment140(
-    test_proportion=None, min_docs_occurrences=3,
+    train_proportion=None, min_docs_occurrences=3,
     dataset_path=TWITTER_SENTIMENT140_PATH
 ):
     path = get_resource_path('twitter_sentiment140_{}_{}_{}.pkl'.format(
         os.path.realpath(dataset_path).replace(os.path.sep, '_'),
-        test_proportion, min_docs_occurrences
+        train_proportion, min_docs_occurrences
     ))
     if os.path.exists(path):
         with open(path, 'r') as resource_file:
@@ -98,7 +98,7 @@ def get_twitter_sentiment140(
     else:
         data = twitter_sentiment140.prepare(
             dataset_path,
-            test_proportion=test_proportion,
+            train_proportion=train_proportion,
             min_docs_occurrences=min_docs_occurrences
         )
         with open(path, 'w') as resource_file:

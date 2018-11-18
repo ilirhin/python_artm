@@ -12,7 +12,7 @@ from .common import create_sparse_matrices
 
 def prepare(
         dataset_path,
-        test_proportion=None,
+        train_proportion=None,
         process_log_step=10000,
         early_stop=None,
         min_docs_occurrences=3
@@ -62,7 +62,7 @@ def prepare(
 
     matrices = create_sparse_matrices(
         documents,
-        test_proportion=test_proportion,
+        train_proportion=train_proportion,
         process_log_step=process_log_step,
         random_seed=42
     )

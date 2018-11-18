@@ -9,7 +9,7 @@ from artm import range
 
 
 def create_sparse_matrices(
-        documents, test_proportion=None,
+        documents, train_proportion=None,
         process_log_step=None, random_seed=42
 ):
     row, col, data = [], [], []
@@ -29,14 +29,14 @@ def create_sparse_matrices(
             max_word_num = max(max_word_num, word_num)
             for _ in range(number):
                 if (
-                        test_proportion is None
-                        or random_gen.random() < test_proportion
+                        train_proportion is None
+                        or random_gen.random() < train_proportion
                 ):
                     cnt[word_num] += 1
                 else:
                     cnt_test[word_num] += 1
 
-        if len(cnt) > 0 and (test_proportion is None or len(cnt_test) > 0):
+        if len(cnt) > 0 and (train_proportion is None or len(cnt_test) > 0):
             for w, c in cnt.iteritems():
                 row.append(not_empty_docs_number)
                 col.append(w)
@@ -53,7 +53,7 @@ def create_sparse_matrices(
     print('Nonzero test values:', len(data_test))
 
     shape = (not_empty_docs_number, max_word_num + 1)
-    if test_proportion is None:
+    if train_proportion is None:
         return scipy.sparse.csr_matrix(
             (data, (row, col)),
             shape=shape

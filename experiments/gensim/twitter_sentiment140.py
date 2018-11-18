@@ -10,7 +10,7 @@ if __name__ == '__main__':
         _,
         num_2_token
     ) = main_cases.get_twitter_sentiment140(
-        test_proportion=0.2, min_docs_occurrences=3
+        train_proportion=0.8, min_docs_occurrences=3
     )
     manager.perform_experiment(
         train_n_dw_matrix, test_n_dw_matrix, 10, num_2_token

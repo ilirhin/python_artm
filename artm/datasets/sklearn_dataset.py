@@ -15,7 +15,7 @@ except ImportError:
 
 def prepare(
         dataset,
-        train_test_split=None,
+        train_proportion=None,
         min_occurrences=3,
         token_2_num=None,
         process_log_step=500
@@ -57,14 +57,14 @@ def prepare(
                 token_2_num[token] = len(token_2_num)
             if token in token_2_num:
                 if (
-                        train_test_split is None
-                        or random_gen.random() < train_test_split
+                        train_proportion is None
+                        or random_gen.random() < train_proportion
                 ):
                     cnt[token_2_num[token]] += 1
                 else:
                     cnt_test[token_2_num[token]] += 1
 
-        if len(cnt) > 0 and (train_test_split is None or len(cnt_test) > 0):
+        if len(cnt) > 0 and (train_proportion is None or len(cnt_test) > 0):
             for w, c in cnt.iteritems():
                 row.append(not_empty_docs_number)
                 col.append(w)
@@ -87,7 +87,7 @@ def prepare(
     }
 
     shape = (not_empty_docs_number, len(token_2_num))
-    if train_test_split is None:
+    if train_proportion is None:
         return (
             scipy.sparse.csr_matrix((data, (row, col)), shape=shape),
             token_2_num,
