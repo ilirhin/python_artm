@@ -16,7 +16,7 @@ if __name__ == '__main__':
     ])[0]
     args_list = list()
     T = 10
-    for phi_alpha in [-10 ** (-i) for i in xrange(30)]:
+    for phi_alpha in [-10 ** (-i) for i in range(30)]:
         for theta_alpha in [-0.1, 0., 0.1]:
             regularization_list = [
                 regularizers.Additive(phi_alpha, theta_alpha)] * 100

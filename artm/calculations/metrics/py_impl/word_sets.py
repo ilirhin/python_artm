@@ -1,6 +1,6 @@
-# coding: utf-8
-
 import numpy as np
+
+from artm import range
 
 
 def calc_jacard_distance(fst_set, snd_set):
@@ -14,12 +14,15 @@ def get_kernels(phi):
     T, W = phi.shape
     return [
         set(np.where(phi[t, :] * W > 1)[0])
-        for t in xrange(T)
+        for t in range(T)
     ]
 
 
 def get_top_words(phi, top_size):
-    return map(set, np.argpartition(phi, -top_size, axis=1)[:, -top_size:])
+    return [
+        set(values)
+        for values in np.argpartition(phi, -top_size, axis=1)[:, -top_size:]
+    ]
 
 
 def calc_kernels_sizes(phi):
@@ -29,8 +32,8 @@ def calc_kernels_sizes(phi):
 def calc_avg_pairwise_jacards2(sets):
     size = len(sets)
     res = 0.
-    for i in xrange(size):
-        for j in xrange(size):
+    for i in range(size):
+        for j in range(size):
             if i != j:
                 res += calc_jacard_distance(sets[i], sets[j])
     return res / size / (size - 1)
@@ -39,8 +42,8 @@ def calc_avg_pairwise_jacards2(sets):
 def calc_avg_pairwise_jacards(sets):
     size = len(sets)
     res = 0.
-    for i in xrange(size):
-        for j in xrange(size):
+    for i in range(size):
+        for j in range(size):
             if i != j:
                 res += calc_jacard_distance(sets[i], sets[j])
     return res / size / (size - 1)

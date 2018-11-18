@@ -2,6 +2,7 @@ import numpy as np
 import scipy.sparse
 
 from artm import EPS
+from artm import range
 from artm import common
 from . import base
 
@@ -36,7 +37,7 @@ class Optimizer(base.Optimizer):
         D, _ = n_dw_matrix.shape
         docsizes = []
         indptr = n_dw_matrix.indptr
-        for doc_num in xrange(D):
+        for doc_num in range(D):
             size = indptr[doc_num + 1] - indptr[doc_num]
             if self.use_B_cheat:
                 docsizes.extend([size] * size)

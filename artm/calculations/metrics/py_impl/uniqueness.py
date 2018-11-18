@@ -1,13 +1,15 @@
 import numpy as np
 
+from artm import range
+
 
 def calc_phi_uniqueness_measures(phi):
     T, W = phi.shape
     uniqueness_measures = list()
     normalized_uniqueness_measures = list()
-    for t in xrange(T):
+    for t in range(T):
         positions = phi[t, :] == 0.
-        topics = [x for x in xrange(T) if x != t]
+        topics = [x for x in range(T) if x != t]
         if np.sum(positions) == 0:
             uniqueness_measures.append(0.)
             normalized_uniqueness_measures.append(0.)

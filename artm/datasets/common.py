@@ -1,10 +1,17 @@
+from __future__ import print_function
+
 import random
 from collections import Counter
 
 import scipy.sparse
 
+from artm import range
 
-def create_sparse_matrices(documents, test_proportion=None, process_log_step=None, random_seed=42):
+
+def create_sparse_matrices(
+        documents, test_proportion=None,
+        process_log_step=None, random_seed=42
+):
     row, col, data = [], [], []
     row_test, col_test, data_test = [], [], []
     not_empty_docs_number = 0
@@ -13,14 +20,14 @@ def create_sparse_matrices(documents, test_proportion=None, process_log_step=Non
 
     for doc_num, words in documents.iteritems():
         if process_log_step and doc_num % process_log_step == 0:
-            print 'Processed documents:', doc_num
+            print('Processed documents:', doc_num)
 
         cnt = Counter()
         cnt_test = Counter()
 
         for word_num, number in words:
             max_word_num = max(max_word_num, word_num)
-            for _ in xrange(number):
+            for _ in range(number):
                 if (
                         test_proportion is None
                         or random_gen.random() < test_proportion
@@ -42,14 +49,23 @@ def create_sparse_matrices(documents, test_proportion=None, process_log_step=Non
 
             not_empty_docs_number += 1
 
+    print('Nonzero train values:', len(data))
+    print('Nonzero test values:', len(data_test))
+
     shape = (not_empty_docs_number, max_word_num + 1)
-    return (
-        scipy.sparse.csr_matrix(
+    if test_proportion is None:
+        return scipy.sparse.csr_matrix(
             (data, (row, col)),
             shape=shape
-        ),
-        scipy.sparse.csr_matrix(
-            (data_test, (row_test, col_test)),
-            shape=shape
         )
-    )
+    else:
+        return (
+            scipy.sparse.csr_matrix(
+                (data, (row, col)),
+                shape=shape
+            ),
+            scipy.sparse.csr_matrix(
+                (data_test, (row_test, col_test)),
+                shape=shape
+            )
+        )

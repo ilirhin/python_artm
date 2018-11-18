@@ -12,15 +12,15 @@ from artm.datasets import twitter_sentiment140
 
 ARTM_DIR = os.path.dirname(os.path.realpath(datasets.__file__))
 ARTM_RESOURCES = os.path.join(ARTM_DIR, 'resources')
-NIPS_PATH = os.path.join(
-    os.path.expanduser('~'), 'artm-datasets', 'NIPS.csv'
+DATASETS_PATH = os.environ.get(
+    'ARTM_DATASETS_PATH',
+    os.path.join(os.path.expanduser('~'), 'artm-datasets')
 )
+NIPS_PATH = os.path.join(DATASETS_PATH, 'NIPS.csv')
 TWITTER_SENTIMENT140_PATH = os.path.join(
-    os.path.expanduser('~'), 'artm-datasets', 'twitter-sentiment140.csv'
+    DATASETS_PATH, 'twitter-sentiment140.csv'
 )
-WNTM_MATRIX_DIR_PATH = os.path.join(
-    os.path.expanduser('~'), 'artm-datasets', 'wntm_matrix'
-)
+WNTM_MATRIX_DIR_PATH = os.path.join(DATASETS_PATH, 'wntm_matrix')
 
 
 def set_nips_path(path):

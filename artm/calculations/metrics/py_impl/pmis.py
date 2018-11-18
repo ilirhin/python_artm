@@ -1,6 +1,6 @@
-# coding: utf-8
-
 import numpy as np
+
+from artm import range
 
 
 def create_pmi_top_function(
@@ -13,7 +13,7 @@ def create_pmi_top_function(
         max_top_size = max(top_sizes)
         pmi, ppmi = np.zeros(max_top_size), np.zeros(max_top_size)
         tops = np.argpartition(phi, -max_top_size, axis=1)[:, -max_top_size:]
-        for t in xrange(T):
+        for t in range(T):
             top = sorted(tops[t], key=lambda w: - phi[t, w])
             co_occurrences = doc_co_occurrences[top, :][:, top].todense()
             occurrences = doc_occurrences[top]

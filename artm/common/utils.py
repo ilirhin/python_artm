@@ -2,13 +2,14 @@ import numpy as np
 import scipy.sparse
 
 from artm import EPS
+from artm import range
 
 
 def get_docptr(n_dw_matrix):
     D, W = n_dw_matrix.shape
     docptr = []
     indptr = n_dw_matrix.indptr
-    for doc_num in xrange(D):
+    for doc_num in range(D):
         docptr.extend(
             [doc_num] * (indptr[doc_num + 1] - indptr[doc_num])
         )
