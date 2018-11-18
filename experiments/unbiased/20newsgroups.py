@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     args_list = list()
     for T in [10, 30]:
-        for tau in [1e3, 1e4, 1e5, 1e6, 1e7, 1e8]:
+        for tau in [1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 3e8, 5e8]:
             for use_old_phi in [False, True]:
                 regularization_list = [
                     regularizers.Decorrelator(tau, use_old_phi)] * 100
