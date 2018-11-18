@@ -11,6 +11,16 @@ def create_svm_score_function(
     test_size=0.3, random_state=42,
     C_range=None, gamma_range=None
 ):
+    """
+    :param targets: array of targets of objects
+    :param verbose: flag to log
+    :param test_size: fraction of test for train_test_split
+    :param random_state: random_state for random generator
+    :param C_range: values of C for SVM
+    :param gamma_range: values of gamma for SVM
+    :return: best_C, best_gamma, best_val (accuracy score on cv),
+    best_cv_algo_score_on_test (accuracy of the SVM with the best params)
+    """
     if C_range is None:
         C_range = [1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3]
     if gamma_range is None:

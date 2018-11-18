@@ -9,18 +9,30 @@ def default_callback(
     train_n_dw_matrix=None,
     test_n_dw_matrix=None,
     top_pmi_sizes=None,
-    top_avg_jacard_sizes=None,
+    top_avg_jaccard_sizes=None,
     uniqueness_measures=False,
     measure_time=False,
     forced_occurrences_co_occurrences_tuple=None,
     collect_phi=False,
     collect_theta=False
 ):
+    """
+    :param train_n_dw_matrix:
+    :param test_n_dw_matrix:
+    :param top_pmi_sizes: sizes of tops to calc pmi for
+    :param top_avg_jaccard_sizes: sizes of tops to calc avg_pairwise_jaccard for
+    :param uniqueness_measures: flag to calc uniqueness_measures
+    :param measure_time: flag to calc measure time of the parts
+    :param forced_occurrences_co_occurrences_tuple: tuple of occurrences and co-occurrences
+    :param collect_phi: collect phis over iterations
+    :param collect_theta: collect thetas over iterations
+    :return:
+    """
     builder = callbacks.Builder(measure_time=measure_time) \
         .sparsity() \
         .theta_sparsity() \
         .kernel_avg_size() \
-        .kernel_avg_jacard() \
+        .kernel_avg_jaccard() \
         .topic_correlation()
     n_dw_matrix = 0.
     if train_n_dw_matrix is not None:
@@ -38,9 +50,9 @@ def default_callback(
             occurrences, co_occurrences,
             n_dw_matrix.shape[0], top_pmi_sizes
         )
-    if top_avg_jacard_sizes is not None:
-        for top_size in top_avg_jacard_sizes:
-            builder = builder.top_avg_jacard(top_size)
+    if top_avg_jaccard_sizes is not None:
+        for top_size in top_avg_jaccard_sizes:
+            builder = builder.top_avg_jaccard(top_size)
     if uniqueness_measures:
         builder = builder.uniqueness_measure()
     if collect_phi:
@@ -54,6 +66,15 @@ def default_sample(
         train_n_dw_matrix, T, seed, optimizer,
         init_phi_zeros=None, init_theta_zeros=None
 ):
+    """
+    :param train_n_dw_matrix:
+    :param T: number of topics
+    :param seed: seed for random
+    :param optimizer: artm.optimizations.base.Optimizer
+    :param init_phi_zeros: matrix to init zeros for phi
+    :param init_theta_zeros: matrix to init zeros for theta
+    :return:
+    """
     D, W = train_n_dw_matrix.shape
     random_gen = np.random.RandomState(seed)
     phi_matrix = common.get_prob_matrix_by_counters(

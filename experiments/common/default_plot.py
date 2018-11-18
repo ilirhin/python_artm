@@ -97,17 +97,17 @@ def eval_experiment_res(
                         legend=[fst_name, snd_name]
                     )
 
-        parsed = re.findall('top_(\d+)_avg_jacard', metric)
+        parsed = re.findall('top_(\d+)_avg_jaccard', metric)
         if parsed:
             top_size = parsed[0]
             compare(
                 values_list=[fst_dict[metric], snd_dict[metric]],
-                ylabel='Top {} Average Jacard'.format(top_size),
+                ylabel='Top {} Average jaccard'.format(top_size),
                 legend=[fst_name, snd_name]
             )
 
         if metric in {
-            'kernel_avg_size', 'kernel_avg_jacard',
+            'kernel_avg_size', 'kernel_avg_jaccard',
             'phi_sparsity', 'theta_sparsity',
             'topic_correlation'
         }:

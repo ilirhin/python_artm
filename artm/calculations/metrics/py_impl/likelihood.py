@@ -6,6 +6,12 @@ from artm.loss_functions import LogFunction
 
 
 def create_calculate_likelihood_like_function(n_dw_matrix, loss_function=None):
+    """
+    :param n_dw_matrix: sparse document-word matrix, shape is D x W
+    :param loss_function: loss function
+    :return: function, which takes phi and theta and returns
+    sum_{w, d} n_dw * loss_function(sum_t phi_tw * theta_dt)
+    """
     if loss_function is None:
         loss_function = LogFunction()
 
@@ -23,6 +29,11 @@ def create_calculate_likelihood_like_function(n_dw_matrix, loss_function=None):
 
 
 def calc_perplexity_function(n_dw_matrix):
+    """
+    :param n_dw_matrix: sparse document-word matrix, shape is D x W
+    :return: function which takes phi and theta and returns perplexity
+    perplexity is e^{-ln_likelihood / n_dw_matrix.sum()}
+    """
     helper = create_calculate_likelihood_like_function(
         loss_function=LogFunction(),
         n_dw_matrix=n_dw_matrix

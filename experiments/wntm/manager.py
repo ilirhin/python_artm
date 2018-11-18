@@ -50,7 +50,7 @@ def perform_ww_experiment((n_ww_matrix, optimizer, T, samples, output_dir)):
         print('Seed', seed)
         seed_callback = experiments.default_callback(
             train_n_dw_matrix=n_ww_matrix,
-            top_avg_jacard_sizes=[10, 50, 100, 200]
+            top_avg_jaccard_sizes=[10, 50, 100, 200]
         )
         phi, theta, n_tw, n_dt = symmetric_sample(
             n_ww_matrix, T, seed, optimizer

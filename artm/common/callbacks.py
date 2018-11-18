@@ -9,6 +9,10 @@ from artm.common.timers import SimpleTimer
 
 
 def save_results(result_obj, output_path):
+    """
+    :param result_obj: the object to be saved
+    :param output_path: path where to save result_obj
+    """
     if not os.path.exists(os.path.dirname(output_path)):
         os.makedirs(os.path.dirname(output_path))
     with open(output_path, 'w') as output_file:
@@ -17,15 +21,38 @@ def save_results(result_obj, output_path):
 
 class Basic(object):
     def start_launch(self):
+        """
+        :return:
+
+        starts series of the calls
+        """
         pass
 
     def finish_launch(self):
+        """
+
+        :return:
+
+        finishes series of the calls
+        """
         pass
 
     def __call__(self, it, phi, theta):
+        """
+        :param it: the number of the iteration
+        :param phi: topics-words matrix, shape T x W, stochastic over W
+        :param theta: docs-topics matrix, shape D x T, stochastic over T
+        :return:
+        """
         raise NotImplementedError()
 
     def save_results(self, output_path):
+        """
+        :param output_path: path where to save
+        :return:
+
+        saves results of the calls
+        """
         pass
 
 
@@ -59,14 +86,17 @@ class TimedCallback(Callback):
 
 
 class Builder(object):
+    """
+    Builder of callbacks. It makes the creation of a callback more simple
+    """
     def __init__(self, measure_time=False):
         self.metrics = dict()
         self.measure_time = measure_time
 
-    def top_avg_jacard(self, top_size):
+    def top_avg_jaccard(self, top_size):
         self.metrics[
-            'top_{}_avg_jacard'.format(top_size)
-        ] = lambda it, phi, theta: metrics.calc_avg_top_words_jacards(
+            'top_{}_avg_jaccard'.format(top_size)
+        ] = lambda it, phi, theta: metrics.calc_avg_top_words_jaccards(
             phi, top_size
         )
         return self
@@ -97,10 +127,10 @@ class Builder(object):
         ] = lambda it, phi, theta: np.mean(metrics.calc_kernels_sizes(phi))
         return self
 
-    def kernel_avg_jacard(self):
+    def kernel_avg_jaccard(self):
         self.metrics[
-            'kernel_avg_jacard'
-        ] = lambda it, phi, theta: metrics.calc_avg_pairwise_kernels_jacards(
+            'kernel_avg_jaccard'
+        ] = lambda it, phi, theta: metrics.calc_avg_pairwise_kernels_jaccards(
             phi
         )
         return self

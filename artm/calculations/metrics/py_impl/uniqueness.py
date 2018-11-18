@@ -4,6 +4,10 @@ import numpy as np
 
 
 def calc_phi_uniqueness_measures(phi):
+    """
+    :param phi: topics-words matrix, shape T x W, stochastic over W
+    :return: pair of uniqueness and normalized uniqueness measures arrays
+    """
     T, W = phi.shape
     uniqueness_measures = list()
     normalized_uniqueness_measures = list()
