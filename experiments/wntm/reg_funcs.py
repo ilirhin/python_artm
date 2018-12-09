@@ -1,6 +1,6 @@
 import numpy as np
 
-from artm import common
+from pyartm import common
 
 
 def plsa(phi, theta, n_tw, n_dt):

@@ -1,10 +1,10 @@
 import numpy as np
 from gensim.models.ldamodel import LdaModel
 
-from artm import regularizers
-from artm import common
-from artm.common import experiments
-from artm.optimizations import default
+from pyartm import regularizers
+from pyartm import common
+from pyartm.common import experiments
+from pyartm.optimizations import default
 
 import common as exp_common
 

@@ -19,10 +19,10 @@ GIT_LFS_SKIP_SMUDGE=1 pip install git+https://github.com/ilirhin/python_artm.git
 `GIT_LFS_SKIP_SMUDGE=1` is recommended if you want to speed up the installation.
 
 # Datasets
-You can get the datasets for the experiments by the [link](https://yadi.sk/d/BWPx6v-iYb_xuw). Download this directory. To pass the path to this directory to `artm` set the environment variable `ARTM_DATASETS_PATH` (add it to `.bashrc` file):
+You can get the datasets for the experiments by the [link](https://yadi.sk/d/BWPx6v-iYb_xuw). Download this directory. To pass the path to this directory to `artm` set the environment variable `PYARTM_DATASETS_PATH` (add it to `.bashrc` file):
 ```
-export ARTM_DATASETS_PATH=<path to the dowloaded unziped directory>
+export PYARTM_DATASETS_PATH=<path to the dowloaded unziped directory>
 ``` 
-By default the path `~/artm-datasets` is used.
+By default the path `~/pyartm-datasets` is used.
 
 For lemmatization you have to install Patterm library (it's a gensim's dependency). You may have problems on mac, see [here](https://bit.ly/2RMEC0W) for possible solutions. 

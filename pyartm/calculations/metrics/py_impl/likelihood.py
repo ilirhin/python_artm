@@ -1,8 +1,8 @@
 import numpy as np
 
-from artm import common
-from artm.calculations.inner_product import memory_efficient_inner1d
-from artm.loss_functions import LogFunction
+from pyartm import common
+from pyartm.calculations.inner_product import memory_efficient_inner1d
+from pyartm.loss_functions import LogFunction
 
 
 def create_calculate_likelihood_like_function(n_dw_matrix, loss_function=None):

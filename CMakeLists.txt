@@ -19,4 +19,4 @@ find_package(PythonInterp REQUIRED)
 find_package(PythonLibs REQUIRED)
 
 add_subdirectory(${THIRD_PARTY_DIRS}/pybind11)
-add_subdirectory(${CMAKE_SOURCE_DIR}/artm/calculations/inner_product)
+add_subdirectory(${CMAKE_SOURCE_DIR}/pyartm1/calculations/inner_product)

@@ -4,10 +4,10 @@ from multiprocessing import Pool
 
 from sklearn.datasets import fetch_20newsgroups
 
-from artm.datasets import sklearn_dataset
-from artm.optimizations import thetaless
-from artm.optimizations import default
-from artm import regularizers
+from pyartm.datasets import sklearn_dataset
+from pyartm.optimizations import thetaless
+from pyartm.optimizations import default
+from pyartm import regularizers
 
 import manager
 

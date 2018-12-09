@@ -3,8 +3,8 @@ from future.builtins import range
 import numpy as np
 import scipy.sparse
 
-from artm import EPS
-from artm import common
+from pyartm import EPS
+from pyartm import common
 from . import base
 
 

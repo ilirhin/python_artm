@@ -1,4 +1,4 @@
-from artm.common import experiments
+from pyartm.common import experiments
 
 
 def perform_experiment((

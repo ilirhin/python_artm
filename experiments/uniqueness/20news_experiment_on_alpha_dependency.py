@@ -1,8 +1,8 @@
 from multiprocessing import Pool
 
-from artm.datasets import main_cases
-from artm import regularizers
-from artm.optimizations import default
+from pyartm.datasets import main_cases
+from pyartm import regularizers
+from pyartm.optimizations import default
 
 import manager
 

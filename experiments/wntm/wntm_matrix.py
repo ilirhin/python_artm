@@ -1,8 +1,8 @@
 from multiprocessing import Pool
 
-from artm.optimizations import timed_default
-from artm.optimizations import thetaless
-from artm.datasets import main_cases
+from pyartm.optimizations import timed_default
+from pyartm.optimizations import thetaless
+from pyartm.datasets import main_cases
 import reg_funcs
 
 import manager

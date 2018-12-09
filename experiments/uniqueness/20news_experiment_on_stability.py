@@ -6,11 +6,11 @@ import os
 import numpy as np
 import scipy.sparse
 
-from artm.datasets import main_cases
-from artm import regularizers
-from artm.common import experiments
-from artm.calculations import metrics
-from artm.optimizations import default
+from pyartm.datasets import main_cases
+from pyartm import regularizers
+from pyartm.common import experiments
+from pyartm.calculations import metrics
+from pyartm.optimizations import default
 
 
 def get_optimizer(phi_alpha, iters_count):

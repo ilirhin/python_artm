@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import os
 import re
 import sys
@@ -9,7 +11,7 @@ from distutils.version import LooseVersion
 from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
 
-import artm
+import pyartm
 
 
 class CMakeExtension(Extension):
@@ -34,7 +36,11 @@ class CMakeBuild(build_ext):
                 raise RuntimeError("CMake >= 3.1.0 is required on Windows")
 
         for ext in self.extensions:
-            self.build_extension(ext)
+            try:
+                self.build_extension(ext)
+            except subprocess.CalledProcessError:
+                print('\n\n\nERROR: Failed to build C++ extension. '
+                      'Use pure python\n\n\n')
 
     def build_extension(self, ext):
         extdir = os.path.abspath(
@@ -51,6 +57,18 @@ class CMakeBuild(build_ext):
                 extdir)]
             if sys.maxsize > 2**32:
                 cmake_args += ['-A', 'x64']
+
+            plat = 'x64' if platform.architecture()[0] == '64bit' else 'Win32'
+            # Assuming that Visual Studio and MinGW are supported compilers
+            if self.compiler.compiler_type == 'msvc':
+                cmake_args += [
+                    '-DCMAKE_GENERATOR_PLATFORM=%s' % plat,
+                ]
+            else:
+                cmake_args += [
+                    '-G', 'MinGW Makefiles',
+                ]
+
             build_args += ['--', '/m']
         else:
             cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
@@ -69,20 +87,20 @@ class CMakeBuild(build_ext):
         print()  # Add an empty line for cleaner output
 
 
-included_packages = ('artm*',)
+included_packages = ('pyartm*',)
 
 with open('requirements.txt', 'r') as f:
     requirements = [x.strip() for x in f if x.strip()]
 
 setup(
     name='python-artm',
-    version=artm.__version__,
+    version=pyartm.__version__,
     author='Irkhin Ilya',
     author_email='ilirhin@gmail.com.com',
     description='Python implementation (with optional cpp extensions)'
                 ' of ARTM algorithm',
     long_description='',
-    ext_modules=[CMakeExtension('artm')],
+    ext_modules=[CMakeExtension('pyartm')],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
     install_requires=requirements,

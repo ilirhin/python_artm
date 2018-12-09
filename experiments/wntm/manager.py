@@ -4,14 +4,14 @@ import os
 
 import numpy as np
 
-from artm import common
+from pyartm import common
 
-from artm.calculations import metrics
-from artm import EPS
-from artm.common import experiments
-from artm.common import callbacks
+from pyartm.calculations import metrics
+from pyartm import EPS
+from pyartm.common import experiments
+from pyartm.common import callbacks
 
-from artm.common.timers import SimpleTimer
+from pyartm.common.timers import SimpleTimer
 
 
 def symmetric_sample(train_n_dw_matrix, T, seed, optimizer):

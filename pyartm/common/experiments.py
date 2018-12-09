@@ -1,8 +1,8 @@
 import numpy as np
 
-from artm import common
-from artm import EPS
-from artm.common import callbacks
+from pyartm import common
+from pyartm import EPS
+from pyartm.common import callbacks
 
 
 def default_callback(
@@ -70,7 +70,7 @@ def default_sample(
     :param train_n_dw_matrix:
     :param T: number of topics
     :param seed: seed for random
-    :param optimizer: artm.optimizations.base.Optimizer
+    :param optimizer: pyartm.optimizations.base.Optimizer
     :param init_phi_zeros: matrix to init zeros for phi
     :param init_theta_zeros: matrix to init zeros for theta
     :return:

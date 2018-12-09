@@ -2,7 +2,7 @@ import numpy as np
 
 from . import base
 
-from artm.common.timers import SimpleTimer
+from pyartm.common.timers import SimpleTimer
 
 
 class Optimizer(base.Optimizer):

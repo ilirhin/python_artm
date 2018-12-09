@@ -5,16 +5,16 @@ from sklearn.datasets import fetch_20newsgroups
 import numpy as np
 import scipy.sparse
 
-from artm import datasets
-from artm.datasets import sklearn_dataset
-from artm.datasets import nips
-from artm.datasets import twitter_sentiment140
+from pyartm import datasets
+from pyartm.datasets import sklearn_dataset
+from pyartm.datasets import nips
+from pyartm.datasets import twitter_sentiment140
 
 ARTM_DIR = os.path.dirname(os.path.realpath(datasets.__file__))
 ARTM_RESOURCES = os.path.join(ARTM_DIR, 'resources')
 DATASETS_PATH = os.environ.get(
-    'ARTM_DATASETS_PATH',
-    os.path.join(os.path.expanduser('~'), 'artm-datasets')
+    'PYARTM_DATASETS_PATH',
+    os.path.join(os.path.expanduser('~'), 'pyartm-datasets')
 )
 NIPS_PATH = os.path.join(DATASETS_PATH, 'NIPS.csv')
 TWITTER_SENTIMENT140_PATH = os.path.join(

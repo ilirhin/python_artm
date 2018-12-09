@@ -1,7 +1,7 @@
 from __future__ import print_function
 
-from artm.optimizations import timed_default
-from artm.common import experiments
+from pyartm.optimizations import timed_default
+from pyartm.common import experiments
 
 
 def perform_experiment(n_dw_matrix, optimizer, T, samples):

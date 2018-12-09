@@ -5,12 +5,12 @@ import numpy as np
 from sklearn.metrics import accuracy_score
 from sklearn.svm import SVC
 
-from artm import common
-from artm.common import experiments
-from artm.common import callbacks
-from artm.optimizations import thetaless
-from artm.optimizations import default
-from artm.calculations import metrics
+from pyartm import common
+from pyartm.common import experiments
+from pyartm.common import callbacks
+from pyartm.optimizations import thetaless
+from pyartm.optimizations import default
+from pyartm.calculations import metrics
 
 
 def perform_experiment((

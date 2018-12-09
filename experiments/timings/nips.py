@@ -1,6 +1,6 @@
-from artm import regularizers
-from artm.datasets import main_cases
-from artm.optimizations import timed_default
+from pyartm import regularizers
+from pyartm.datasets import main_cases
+from pyartm.optimizations import timed_default
 
 import manager
 

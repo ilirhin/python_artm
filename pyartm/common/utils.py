@@ -4,7 +4,7 @@ from future.utils import iteritems
 import numpy as np
 import scipy.sparse
 
-from artm import EPS
+from pyartm import EPS
 
 
 def get_docptr(n_dw_matrix):

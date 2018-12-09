@@ -1,6 +1,6 @@
 import numpy as np
 
-from artm import EPS
+from pyartm import EPS
 
 
 class LogFunction(object):

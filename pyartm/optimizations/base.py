@@ -6,9 +6,9 @@ import sys
 import numpy as np
 import scipy.sparse
 
-from artm import common
-from artm import loss_functions as losses
-from artm.calculations.inner_product import memory_efficient_inner1d
+from pyartm import common
+from pyartm import loss_functions as losses
+from pyartm.calculations.inner_product import memory_efficient_inner1d
 
 
 class Optimizer(object):

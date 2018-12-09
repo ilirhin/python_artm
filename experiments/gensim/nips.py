@@ -1,4 +1,4 @@
-from artm.datasets import main_cases
+from pyartm.datasets import main_cases
 
 import manager
 

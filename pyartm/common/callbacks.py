@@ -6,8 +6,8 @@ import pickle
 
 import numpy as np
 
-from artm.calculations import metrics
-from artm.common.timers import SimpleTimer
+from pyartm.calculations import metrics
+from pyartm.common.timers import SimpleTimer
 
 
 def save_results(result_obj, output_path):

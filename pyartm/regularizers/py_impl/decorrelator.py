@@ -1,5 +1,5 @@
 import numpy as np
-from artm.common import get_prob_matrix_by_counters
+from pyartm.common import get_prob_matrix_by_counters
 
 
 class Regularizer(object):
