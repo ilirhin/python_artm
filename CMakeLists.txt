@@ -15,8 +15,8 @@ else ()
     add_definitions ("-DNDEBUG")
 endif ()
 
-find_package(PythonInterp 2.7 REQUIRED)
-find_package(PythonLibs 2.7 REQUIRED)
+find_package(PythonInterp REQUIRED)
+find_package(PythonLibs REQUIRED)
 
 add_subdirectory(${THIRD_PARTY_DIRS}/pybind11)
 add_subdirectory(${CMAKE_SOURCE_DIR}/artm/calculations/inner_product)

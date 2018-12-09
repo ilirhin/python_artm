@@ -1,4 +1,5 @@
-from builtins import range
+from future.builtins import range
+from future.utils import iteritems
 
 import numpy as np
 import scipy.sparse
@@ -62,7 +63,7 @@ def pairwise_counters_2_sparse_matrix(co_occurrences):
     row = []
     col = []
     data = []
-    for (w1, w2), value in co_occurrences.iteritems():
+    for (w1, w2), value in iteritems(co_occurrences):
         row.append(w1)
         col.append(w2)
         data.append(value)

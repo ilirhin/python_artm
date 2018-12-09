@@ -1,4 +1,5 @@
 from __future__ import print_function
+from future.utils import iteritems
 
 from collections import Counter
 from collections import defaultdict
@@ -41,11 +42,11 @@ def prepare(
     token_2_num = dict()
 
     for doc_num in documents:
-        documents[doc_num] = Counter([
+        documents[doc_num] = list(Counter([
             word
             for word in documents[doc_num]
             if docs_occurrences[word] >= min_docs_occurrences]
-        ).items()
+        ).items())
 
         for (word, count) in documents[doc_num]:
             if word not in token_2_num:
@@ -57,7 +58,7 @@ def prepare(
 
     num_2_token = {
         v: k
-        for k, v in token_2_num.iteritems()
+        for k, v in iteritems(token_2_num)
     }
 
     matrices = create_sparse_matrices(

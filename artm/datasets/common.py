@@ -1,6 +1,6 @@
 from __future__ import print_function
-
-from builtins import range
+from future.builtins import range
+from future.utils import iteritems
 
 import random
 from collections import Counter
@@ -18,7 +18,7 @@ def create_sparse_matrices(
     random_gen = random.Random(random_seed)
     max_word_num = -1
 
-    for doc_num, words in documents.iteritems():
+    for doc_num, words in iteritems(documents):
         if process_log_step and doc_num % process_log_step == 0:
             print('Processed documents:', doc_num)
 
@@ -37,12 +37,12 @@ def create_sparse_matrices(
                     cnt_test[word_num] += 1
 
         if len(cnt) > 0 and (train_proportion is None or len(cnt_test) > 0):
-            for w, c in cnt.iteritems():
+            for w, c in iteritems(cnt):
                 row.append(not_empty_docs_number)
                 col.append(w)
                 data.append(c)
 
-            for w, c in cnt_test.iteritems():
+            for w, c in iteritems(cnt_test):
                 row_test.append(not_empty_docs_number)
                 col_test.append(w)
                 data_test.append(c)

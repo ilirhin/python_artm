@@ -1,6 +1,7 @@
 from __future__ import print_function
+from future.builtins import zip
+from future.utils import iteritems
 
-from builtins import zip
 import random
 from collections import Counter
 
@@ -18,6 +19,7 @@ def prepare(
 ):
     english_stopwords = set(stopwords.words('english'))
     is_token_2_num_provided = token_2_num is not None
+    occurrences = None
 
     # remove stopwords
     if not is_token_2_num_provided:
@@ -61,12 +63,12 @@ def prepare(
                     cnt_test[token_2_num[token]] += 1
 
         if len(cnt) > 0 and (train_proportion is None or len(cnt_test) > 0):
-            for w, c in cnt.iteritems():
+            for w, c in iteritems(cnt):
                 row.append(not_empty_docs_number)
                 col.append(w)
                 data.append(c)
 
-            for w, c in cnt_test.iteritems():
+            for w, c in iteritems(cnt_test):
                 row_test.append(not_empty_docs_number)
                 col_test.append(w)
                 data_test.append(c)
@@ -79,7 +81,7 @@ def prepare(
 
     num_2_token = {
         v: k
-        for k, v in token_2_num.iteritems()
+        for k, v in iteritems(token_2_num)
     }
 
     shape = (not_empty_docs_number, len(token_2_num))

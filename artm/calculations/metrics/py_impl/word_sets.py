@@ -1,4 +1,4 @@
-from builtins import range
+from future.builtins import range
 
 import numpy as np
 
@@ -82,6 +82,7 @@ def calc_avg_pairwise_kernels_jaccards(phi):
 def calc_avg_top_words_jaccards(phi, top_size):
     """
     :param phi: topics-words matrix, shape T x W, stochastic over W
+    :param top_size: the size of the top
     :return: average pairwise jaccard distance of the topics' tops
     """
     return calc_avg_pairwise_jaccards(get_top_words(phi, top_size))

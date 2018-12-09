@@ -1,3 +1,5 @@
+from future.utils import iteritems
+
 from collections import defaultdict
 import os
 import pickle
@@ -66,12 +68,12 @@ class Callback(Basic):
         self.launch_result = defaultdict(list)
 
     def finish_launch(self):
-        for name, values in self.launch_result.iteritems():
+        for name, values in iteritems(self.launch_result):
             self.result[name].append(values)
         self.launch_result = None
 
     def __call__(self, it, phi, theta):
-        for name, metric in self.metrics.iteritems():
+        for name, metric in iteritems(self.metrics):
             self.launch_result[name].append(metric(it, phi, theta))
 
     def save_results(self, output_path):
@@ -80,7 +82,7 @@ class Callback(Basic):
 
 class TimedCallback(Callback):
     def __call__(self, it, phi, theta):
-        for name, metric in self.metrics.iteritems():
+        for name, metric in iteritems(self.metrics):
             with SimpleTimer(name):
                 self.launch_result[name].append(metric(it, phi, theta))
 

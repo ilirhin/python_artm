@@ -1,4 +1,5 @@
 from __future__ import print_function
+from future.utils import iteritems
 
 from collections import defaultdict
 
@@ -31,7 +32,7 @@ def prepare(
 
     num_2_token = {
         v: k
-        for k, v in token_2_num.iteritems()
+        for k, v in iteritems(token_2_num)
     }
 
     matrices = create_sparse_matrices(

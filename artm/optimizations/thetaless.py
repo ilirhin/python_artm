@@ -1,4 +1,4 @@
-from builtins import range
+from future.builtins import range
 
 import numpy as np
 import scipy.sparse
