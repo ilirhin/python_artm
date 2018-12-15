@@ -22,6 +22,7 @@ if __name__ == '__main__':
             regularization_list = [
                 regularizers.Additive(phi_alpha, theta_alpha)] * 100
             args_list.append((
+                train_n_dw_matrix, test_n_dw_matrix,
                 default.Optimizer(regularization_list), T, 10,
                 'iter_exp/20news_{}t_{}_{}.pkl'.format(
                     T, phi_alpha, theta_alpha

@@ -14,7 +14,8 @@ def default_callback(
     measure_time=False,
     forced_occurrences_co_occurrences_tuple=None,
     collect_phi=False,
-    collect_theta=False
+    collect_theta=False,
+    iter_eval_step=1
 ):
     """
     :param train_n_dw_matrix:
@@ -26,9 +27,13 @@ def default_callback(
     :param forced_occurrences_co_occurrences_tuple: tuple of occurrences and co-occurrences
     :param collect_phi: collect phis over iterations
     :param collect_theta: collect thetas over iterations
+    :param iter_eval_step: metrics will be evaluated every iter_eval_step iterations
     :return:
     """
-    builder = callbacks.Builder(measure_time=measure_time) \
+    builder = callbacks.Builder(
+            measure_time=measure_time,
+            iter_eval_step=iter_eval_step
+        ) \
         .sparsity() \
         .theta_sparsity() \
         .kernel_avg_size() \
@@ -91,7 +96,9 @@ def default_sample(
         theta_matrix = common.get_prob_matrix_by_counters(
             theta_matrix * (init_theta_zeros > EPS)
         )
-    optimizer.iteration_callback.start_launch()
+    if optimizer.iteration_callback:
+        optimizer.iteration_callback.start_launch()
     result = optimizer.run(train_n_dw_matrix, phi_matrix, theta_matrix)
-    optimizer.iteration_callback.finish_launch()
+    if optimizer.iteration_callback:
+        optimizer.iteration_callback.finish_launch()
     return result

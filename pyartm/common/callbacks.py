@@ -59,10 +59,13 @@ class Basic(object):
 
 
 class Callback(Basic):
-    def __init__(self, metrics):
+    def __init__(self, metrics=None, iter_eval_step=1):
+        if metrics is None:
+            metrics = dict()
         self.metrics = metrics
         self.result = defaultdict(list)
         self.launch_result = None
+        self.iter_eval_step = iter_eval_step
 
     def start_launch(self):
         self.launch_result = defaultdict(list)
@@ -74,7 +77,8 @@ class Callback(Basic):
 
     def __call__(self, it, phi, theta):
         for name, metric in iteritems(self.metrics):
-            self.launch_result[name].append(metric(it, phi, theta))
+            if it % self.iter_eval_step == 0:
+                self.launch_result[name].append(metric(it, phi, theta))
 
     def save_results(self, output_path):
         save_results(self.result, output_path)
@@ -83,17 +87,23 @@ class Callback(Basic):
 class TimedCallback(Callback):
     def __call__(self, it, phi, theta):
         for name, metric in iteritems(self.metrics):
-            with SimpleTimer(name):
-                self.launch_result[name].append(metric(it, phi, theta))
+            if it % self.iter_eval_step == 0:
+                with SimpleTimer(name):
+                    self.launch_result[name].append(metric(it, phi, theta))
 
 
 class Builder(object):
     """
     Builder of callbacks. It makes the creation of a callback more simple
     """
-    def __init__(self, measure_time=False):
+    def __init__(self, measure_time=False, iter_eval_step=1):
         self.metrics = dict()
         self.measure_time = measure_time
+        self.iter_eval_step = iter_eval_step
+
+    def iteration(self):
+        self.metrics['iteration'] = lambda it, phi, theta: it
+        return self
 
     def top_avg_jaccard(self, top_size):
         self.metrics[
@@ -175,6 +185,12 @@ class Builder(object):
 
     def build(self):
         if self.measure_time:
-            return TimedCallback(self.metrics)
+            return TimedCallback(
+                metrics=self.metrics,
+                iter_eval_step=self.iter_eval_step
+            )
         else:
-            return Callback(self.metrics)
+            return Callback(
+                metrics=self.metrics,
+                iter_eval_step=self.iter_eval_step
+            )

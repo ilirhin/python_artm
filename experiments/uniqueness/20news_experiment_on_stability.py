@@ -77,6 +77,7 @@ if __name__ == '__main__':
     matrix = np.dot(init_theta, init_phi)
     matrix[np.isnan(matrix)] = 0.
     synthetic_n_dw_matrix = scipy.sparse.csr_matrix(matrix)
+    synthetic_n_dw_matrix.eliminate_zeros()
 
     perform_lda(
         synthetic_n_dw_matrix, optimizer=get_optimizer(0., 100), T=10,

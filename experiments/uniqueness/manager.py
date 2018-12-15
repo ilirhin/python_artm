@@ -25,7 +25,8 @@ def perform_iteration_dependency_experiment((
     optimizer.iteration_callback = experiments.default_callback(
         train_n_dw_matrix=train_n_dw_matrix,
         test_n_dw_matrix=test_n_dw_matrix,
-        uniqueness_measures=True
+        uniqueness_measures=True,
+        iter_eval_step=5
     )
     for seed in range(samples):
         print(seed)
