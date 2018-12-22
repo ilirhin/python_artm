@@ -31,6 +31,7 @@ if __name__ == '__main__':
                 regularization_list = [
                     regularizers.Additive(phi_alpha, theta_alpha)] * ITERS_COUNT
                 args_list.append((
+                    train_n_dw_matrix, test_n_dw_matrix,
                     default.Optimizer(regularization_list), T, SAMPLES,
                     '20news_experiment/20news_{}t_base_{}_{}.pkl'.format(
                         T, phi_alpha, theta_alpha

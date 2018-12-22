@@ -35,7 +35,8 @@ def perform_doc_experiment((
     optimizer, T, samples, output_path
 )):
     D, _ = n_dw_matrix_doc_test.shape
-    svm_train_score = metrics.create_svm_score_function(n_dw_matrix_doc_train)
+    svm_train_score = metrics.create_svm_score_function(
+        doc_targets_doc_train, verbose=False)
     opt_plsa_not_const_phi = default.Optimizer(
         regularization_list=optimizer.regularization_list[:10],
         const_phi=False
@@ -59,7 +60,6 @@ def perform_doc_experiment((
         phi, theta = experiments.default_sample(
             n_dw_matrix_doc_train, T, seed, optimizer
         )
-
         (
             best_C, best_gamma,
             cv_fold_score, cv_test_score

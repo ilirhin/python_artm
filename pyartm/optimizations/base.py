@@ -110,10 +110,10 @@ class Optimizer(object):
         if self.verbose:
             print("fit time: {}".format(time.time() - start), file=sys.stderr)
 
-        if self.const_phi and init_phi_matrix != phi_matrix:
+        if self.const_phi and not (init_phi_matrix == phi_matrix).all():
             raise ValueError("phi is not constant")
 
-        if self.const_phi and init_theta_matrix != theta_matrix:
+        if self.const_theta and not (init_theta_matrix == theta_matrix).all():
             raise ValueError("theta is not constant")
 
         if self.return_counters:

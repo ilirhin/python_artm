@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from multiprocessing import Pool
 
 from sklearn.datasets import fetch_20newsgroups

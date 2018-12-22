@@ -25,9 +25,10 @@ class CMakeBuild(build_ext):
         try:
             out = subprocess.check_output(['cmake', '--version'])
         except OSError:
-            raise RuntimeError(
-                "CMake must be installed to build the following extensions: " +
-                ", ".join(e.name for e in self.extensions))
+            print('\n\n\nERROR:\n'
+                  'CMake must be installed to build the following extensions:\n\t' +
+                  '\n\t'.join(e.name for e in self.extensions))
+            return None
 
         if platform.system() == "Windows":
             cmake_version = LooseVersion(re.search(r'version\s*([\d.]+)',
@@ -104,6 +105,5 @@ setup(
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
     install_requires=requirements,
-    packages=find_packages(include=included_packages),
-    package_data={'': ['*.so']}
+    packages=find_packages(include=included_packages)
 )
