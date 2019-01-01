@@ -1,5 +1,11 @@
+from __future__ import print_function
+
 import pickle
 import re
+import sys
+
+from future.utils import itervalues
+from future.utils import iterkeys
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,7 +16,7 @@ def plot_mean(values):
     iter_range = range(1, iters + 1)
     val = np.mean(values, axis=0)
     err = 1.96 * np.std(values, axis=0) / np.sqrt(samples)
-    plt.plot(iter_range, val)
+    plt.plot(iter_range, val, linewidth=2)
     plt.fill_between(
         iter_range, val - err, val + err, alpha=0.5, facecolor='yellow'
     )
@@ -20,7 +26,7 @@ def compare(values_list, ylabel='', legend=[], figsize=(10, 4), title=''):
     fig = plt.figure(figsize=figsize)
     ax = fig.add_subplot(1, 1, 1)
     major_ticks = np.arange(
-        0, len(values_list[0]) + 1 if values_list else 101, 5
+        0, len(values_list[0][0]) + 1 if values_list else 101, 5
     )
     ax.set_xticks(major_ticks)
     plt.ylim(0., np.max(values_list) * 1.01)
@@ -34,33 +40,37 @@ def compare(values_list, ylabel='', legend=[], figsize=(10, 4), title=''):
     plt.show()
 
 
-def eval_experiment_res(
-    fst_name, fst_path,
-    snd_name, snd_path,
-):
-    with open(fst_path, 'r') as f:
-        fst_dict = pickle.load(f)
-    with open(snd_path, 'r') as f:
-        snd_dict = pickle.load(f)
+def eval_experiment_res(*name_path_pairs):
+    data = dict()
+    for name, path in zip(name_path_pairs[::2], name_path_pairs[1::2]):
+        try:
+            with open(path, 'r') as f:
+                data[name] = pickle.load(f)
+        except IOError:
+            print('Cannot load results from {}'.format(path), file=sys.stderr)
 
-    if 'train_perplexity' in fst_dict:
-        use_test_perplexity = 'test_perplexity' in fst_dict
+    if all('train_perplexity' in data_dict for data_dict in itervalues(data)):
+        use_test_perplexity = all(
+            'test_perplexity' in data_dict for data_dict in itervalues(data))
         compare(
             values_list=[
-                fst_dict['train_perplexity'], snd_dict['train_perplexity']
+                data_dict['train_perplexity']
+                for data_dict in itervalues(data)
             ] + [
-                fst_dict['test_perplexity'], snd_dict['test_perplexity']
+                data_dict['test_perplexity']
+                for data_dict in itervalues(data)
             ] if use_test_perplexity else [],
             ylabel='Perplexity',
             legend=[
-                fst_name + ' train' if use_test_perplexity else '',
-                snd_name + ' train' if use_test_perplexity else ''
+                name + ' train' if use_test_perplexity else ''
+                for name in iterkeys(data)
             ] + [
-                fst_name + ' test', snd_name + ' test'
+                name + ' test'
+                for name in iterkeys(data)
             ] if use_test_perplexity else []
         )
 
-    for metric in fst_dict:
+    for metric in data[list(iterkeys(data))[0]]:
         parsed = re.findall('top_\[([\d,]+)\]_pmi', metric)
         if parsed:
             top_sizes = parsed[0].split(',')
@@ -70,40 +80,34 @@ def eval_experiment_res(
                         values_list=[
                             [
                                 [
-                                    fst_dict[metric][sample_num][iter_num][
+                                    data_dict[metric][sample_num][iter_num][
                                         m_num
                                     ][index]
                                     for iter_num in
-                                    range(len(fst_dict[metric][sample_num]))
+                                    range(len(data_dict[metric][sample_num]))
                                 ]
-                                for sample_num in range(len(fst_dict[metric]))
+                                for sample_num in range(len(data_dict[metric]))
 
-                            ],
-                            [
-                                [
-                                    snd_dict[metric][sample_num][iter_num][
-                                        m_num
-                                    ][index]
-                                    for iter_num in
-                                    range(len(snd_dict[metric][sample_num]))
-                                ]
-                                for sample_num in range(len(snd_dict[metric]))
                             ]
+                            for data_dict in itervalues(data)
                         ],
                         ylabel='Top {} {}'.format(
                             top_sizes[index],
                             'PPMI' if m_num else 'PMI'
                         ),
-                        legend=[fst_name, snd_name]
+                        legend=list(iterkeys(data))
                     )
+
+        values_list = [data_dict[metric] for data_dict in itervalues(data)]
+        legend = list(iterkeys(data))
 
         parsed = re.findall('top_(\d+)_avg_jaccard', metric)
         if parsed:
             top_size = parsed[0]
             compare(
-                values_list=[fst_dict[metric], snd_dict[metric]],
+                values_list=values_list,
                 ylabel='Top {} Average jaccard'.format(top_size),
-                legend=[fst_name, snd_name]
+                legend=legend
             )
 
         if metric in {
@@ -112,7 +116,7 @@ def eval_experiment_res(
             'topic_correlation'
         }:
             compare(
-                values_list=[fst_dict[metric], snd_dict[metric]],
+                values_list=values_list,
                 ylabel=metric.replace('_', ' ').title(),
-                legend=[fst_name, snd_name]
+                legend=legend
             )
