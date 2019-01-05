@@ -10,7 +10,7 @@ from pyartm import regularizers
 import manager
 
 
-SAMPLES = 1000
+SAMPLES = 100
 ITERS_COUNT = 100
 
 

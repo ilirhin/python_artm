@@ -8,7 +8,7 @@ from pyartm.optimizations import default
 import manager
 
 
-ITERS_COUNT = 100
+ITERS_COUNT = 30
 SAMPLES = 20
 
 

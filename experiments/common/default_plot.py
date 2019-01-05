@@ -11,27 +11,34 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plot_mean(values):
-    samples, iters = len(values), len(values[0])
-    iter_range = range(1, iters + 1)
+def plot_mean(values, iters_count=None):
+    samples = len(values)
+    if iters_count is None:
+        iters_count = len(values[0])
+    iter_range = range(1, iters_count + 1)
     val = np.mean(values, axis=0)
     err = 1.96 * np.std(values, axis=0) / np.sqrt(samples)
-    plt.plot(iter_range, val, linewidth=2)
+    plt.plot(iter_range, val[:iters_count], linewidth=2)
     plt.fill_between(
-        iter_range, val - err, val + err, alpha=0.5, facecolor='yellow'
+        iter_range, (val - err)[:iters_count], (val + err)[:iters_count],
+        alpha=0.5, facecolor='yellow'
     )
 
 
-def compare(values_list, ylabel='', legend=[], figsize=(10, 4), title=''):
+def compare(
+        values_list, ylabel='', legend=[],
+        figsize=(10, 4), title='', iters_count=None
+):
     fig = plt.figure(figsize=figsize)
     ax = fig.add_subplot(1, 1, 1)
-    major_ticks = np.arange(
-        0, len(values_list[0][0]) + 1 if values_list else 101, 5
-    )
+    if iters_count is None:
+        iters_count = len(values_list[0][0]) if values_list else 100
+
+    major_ticks = np.arange(0, iters_count + 1, 5)
     ax.set_xticks(major_ticks)
-    plt.ylim(0., np.max(values_list) * 1.01)
+    plt.ylim(0., np.max(np.mean(values_list, axis=1)[:, :iters_count]) * 1.1)
     for values in values_list:
-        plot_mean(values)
+        plot_mean(values, iters_count=iters_count)
     plt.xlabel('Iteration')
     plt.ylabel(ylabel)
     plt.legend(legend)
@@ -40,7 +47,8 @@ def compare(values_list, ylabel='', legend=[], figsize=(10, 4), title=''):
     plt.show()
 
 
-def eval_experiment_res(*name_path_pairs):
+def eval_experiment_res(*name_path_pairs, **kwargs):
+    iters_count = kwargs.get('iters_count')
     data = dict()
     for name, path in zip(name_path_pairs[::2], name_path_pairs[1::2]):
         try:
@@ -67,7 +75,8 @@ def eval_experiment_res(*name_path_pairs):
             ] + [
                 name + ' test'
                 for name in iterkeys(data)
-            ] if use_test_perplexity else []
+            ] if use_test_perplexity else [],
+            iters_count=iters_count
         )
 
     for metric in data[list(iterkeys(data))[0]]:
@@ -95,7 +104,8 @@ def eval_experiment_res(*name_path_pairs):
                             top_sizes[index],
                             'PPMI' if m_num else 'PMI'
                         ),
-                        legend=list(iterkeys(data))
+                        legend=list(iterkeys(data)),
+                        iters_count=iters_count
                     )
 
         values_list = [data_dict[metric] for data_dict in itervalues(data)]
@@ -107,7 +117,8 @@ def eval_experiment_res(*name_path_pairs):
             compare(
                 values_list=values_list,
                 ylabel='Top {} Average jaccard'.format(top_size),
-                legend=legend
+                legend=legend,
+                iters_count=iters_count
             )
 
         if metric in {
@@ -118,5 +129,6 @@ def eval_experiment_res(*name_path_pairs):
             compare(
                 values_list=values_list,
                 ylabel=metric.replace('_', ' ').title(),
-                legend=legend
+                legend=legend,
+                iters_count=iters_count
             )
