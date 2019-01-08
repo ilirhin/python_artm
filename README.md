@@ -26,3 +26,7 @@ export PYARTM_DATASETS_PATH=<path to the dowloaded unziped directory>
 By default the path `~/pyartm-datasets` is used.
 
 For lemmatization you have to install Patterm library (it's a gensim's dependency). You may have problems on mac, see [here](https://bit.ly/2RMEC0W) for possible solutions. 
+
+# Experiments
+
+[The archive with the results of experiments](https://yadi.sk/d/yJqS9DDEvEJdaA)
