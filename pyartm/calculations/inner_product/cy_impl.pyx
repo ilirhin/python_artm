@@ -7,10 +7,10 @@ cimport cython
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def memory_efficient_inner1d(
-        double[:, :] fst_arr,
-        long[:] fst_indices,
-        double[:, :] snd_arr,
-        long[:] snd_indices
+        cython.floating[:, :] fst_arr,
+        cython.integral[:] fst_indices,
+        cython.floating[:, :] snd_arr,
+        cython.integral[:] snd_indices
 ):
     cdef int size = fst_indices.shape[0]
     cdef int width = fst_arr.shape[1]
