@@ -29,7 +29,7 @@ setup(
     description='Python implementation (with optional cpp extensions)'
                 ' of ARTM algorithm',
     long_description='',
-    setup_requires=['cython', 'numpy'],
+    setup_requires=requirements[:2],
     ext_modules=[Extension(
         "pyartm.calculations.inner_product.cy_impl",
         sources=["pyartm/calculations/inner_product/cy_impl.pyx"],
@@ -37,6 +37,6 @@ setup(
     )],
     cmdclass={'build_ext': build_ext},
     zip_safe=False,
-    install_requires=['cython>=0.29'] + requirements,
+    install_requires=requirements,
     packages=find_packages(include=included_packages)
 )
