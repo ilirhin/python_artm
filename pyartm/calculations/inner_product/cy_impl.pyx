@@ -8,9 +8,9 @@ cimport cython
 @cython.wraparound(False)
 def memory_efficient_inner1d(
         np.ndarray[np.float64_t, ndim=2] fst_arr,
-        np.ndarray[np.int_t] fst_indices,
+        np.ndarray[np.int32_t] fst_indices,
         np.ndarray[np.float64_t, ndim=2] snd_arr,
-        np.ndarray[np.int_t] snd_indices
+        np.ndarray[np.int32_t] snd_indices
 ):
     cdef int size = fst_indices.shape[0]
     cdef int width = fst_arr.shape[1]

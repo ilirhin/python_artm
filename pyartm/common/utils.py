@@ -19,7 +19,7 @@ def get_docptr(n_dw_matrix):
         docptr.extend(
             [doc_num] * (indptr[doc_num + 1] - indptr[doc_num])
         )
-    return np.array(docptr)
+    return np.array(docptr, dtype=np.int32)
 
 
 def get_prob_matrix_by_counters(counters, inplace=False):
