@@ -9,6 +9,8 @@ except ImportError:
     from setuptools.command.build_ext import build_ext
     np_include_dirs = ''
 
+import platform
+
 from distutils.core import setup
 from distutils.extension import Extension
 from setuptools import find_packages
@@ -18,8 +20,13 @@ import pyartm
 
 included_packages = ('pyartm*',)
 
-with open('requirements.txt', 'r') as f:
-    requirements = [x.strip() for x in f if x.strip()]
+is_windows = platform.system() == 'Windows'
+with open('requirements.txt', 'r') as req_file:
+    requirements = [
+        line.strip()
+        for line in req_file
+        if line.strip() and (is_windows or 'mysqlclient' not in line)
+    ]
 
 setup(
     name='python-artm',
