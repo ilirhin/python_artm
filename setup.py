@@ -12,8 +12,7 @@ except ImportError:
 import platform
 
 from distutils.core import setup
-from distutils.extension import Extension
-from setuptools import find_packages
+from setuptools import Extension, find_packages
 
 import pyartm
 
