@@ -2,7 +2,9 @@
 from __future__ import print_function
 
 import platform
-from setuptools import setup, Extension, find_packages
+from distutils.core import setup
+from distutils.extension import Extension
+from setuptools import find_packages
 
 try:
     from Cython.Build import build_ext
