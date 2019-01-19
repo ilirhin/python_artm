@@ -1,8 +1,7 @@
 .idea
 *.pyc
 build/
-Release/
-python_artm.egg-info/
+dist/
+*.egg-info/
 **/old/
 *.so
-
