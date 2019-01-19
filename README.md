@@ -13,10 +13,10 @@ Usage of [virtualenv](https://virtualenv.pypa.io/en/stable/userguide/#usage) is 
 
 For the moment the pypi installation is not supported, but installation from git is available:
 ```
-GIT_LFS_SKIP_SMUDGE=1 pip install git+https://github.com/ilirhin/python_artm.git
+env GIT_LFS_SKIP_SMUDGE=1 pip install git+https://github.com/ilirhin/python_artm.git
 ```
 
-`GIT_LFS_SKIP_SMUDGE=1` is recommended if you want to speed up the installation.
+`env GIT_LFS_SKIP_SMUDGE=1` is recommended if you want to speed up the installation.
 
 # Datasets
 You can get the datasets for the experiments by the [link](https://yadi.sk/d/BWPx6v-iYb_xuw). Download this directory. To pass the path to this directory to `artm` set the environment variable `PYARTM_DATASETS_PATH` (add it to `.bashrc` file):
