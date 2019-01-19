@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 import platform
+import os
 from setuptools import find_packages, setup
-
 import pyartm_datasets
 
 
 included_packages = ('pyartm_datasets*',)
 
 is_windows = platform.system() == 'Windows'
-with open('requirements.txt', 'r') as req_file:
+setup_dir = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(setup_dir, 'requirements.txt'), 'r') as req_file:
     requirements = [
         line.strip()
         for line in req_file

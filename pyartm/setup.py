@@ -1,13 +1,12 @@
 #!/usr/bin/env python
-
+import os
 from setuptools import find_packages, setup
-
 import pyartm
 
 
 included_packages = ('pyartm*',)
-
-with open('requirements.txt', 'r') as req_file:
+setup_dir = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(setup_dir, 'requirements.txt'), 'r') as req_file:
     requirements = [line.strip() for line in req_file if line.strip()]
 
 setup(
