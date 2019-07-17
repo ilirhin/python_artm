@@ -3,6 +3,7 @@ from multiprocessing import Pool
 from pyartm_datasets import main_cases
 from pyartm import regularizers
 from pyartm.optimizations import thetaless
+from pyartm.optimizations import naive_thetaless
 from pyartm.optimizations import default
 
 import manager
@@ -34,6 +35,13 @@ if __name__ == '__main__':
                     train_n_dw_matrix, test_n_dw_matrix,
                     default.Optimizer(regularization_list), T, SAMPLES,
                     '20news_experiment/20news_{}t_base_{}_{}.pkl'.format(
+                        T, phi_alpha, theta_alpha
+                    )
+                ))
+                args_list.append((
+                    train_n_dw_matrix, test_n_dw_matrix,
+                    naive_thetaless.Optimizer(regularization_list), T, SAMPLES,
+                    '20news_experiment/20news_{}t_naive_{}_{}.pkl'.format(
                         T, phi_alpha, theta_alpha
                     )
                 ))
