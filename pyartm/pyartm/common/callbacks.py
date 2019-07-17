@@ -15,6 +15,7 @@ def save_results(result_obj, output_path):
     :param result_obj: the object to be saved
     :param output_path: path where to save result_obj
     """
+    output_path = os.path.realpath(output_path)
     if not os.path.exists(os.path.dirname(output_path)):
         os.makedirs(os.path.dirname(output_path))
     with open(output_path, 'w') as output_file:
