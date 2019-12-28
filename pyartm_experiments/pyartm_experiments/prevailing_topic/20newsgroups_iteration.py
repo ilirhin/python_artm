@@ -17,7 +17,7 @@ def print_matrix(arr):
 
 if __name__ == '__main__':
     _n_dw_matrix, _, num_2_token, doc_targets = main_cases.get_20newsgroups([
-        'comp.sys.mac.hardware',
+        'rec.sport.hockey',
         'talk.politics.guns',
     ])
     topic_0_indices, topic_1_indices = [],  []
@@ -27,7 +27,10 @@ if __name__ == '__main__':
         elif target == 1:
             topic_1_indices.append(index)
 
-    for balance in [1, 2, 5, 10, 20, 50, 100, 200, 300, 500]:
+    thetaless_rels = []
+    lda_rels = []
+    for balance in range(10, 201, 10):
+        print(balance)
         n_dw_matrix = _n_dw_matrix[topic_0_indices + topic_1_indices * balance, :]
         regularization_list = [regularizers.Additive(-0.1, 0.)] * 100
         lda_phi, lda_theta = experiments.default_sample(
@@ -42,36 +45,21 @@ if __name__ == '__main__':
             seed=42,
             optimizer=thetaless.Optimizer(regularization_list, verbose=False)
         )
-        online_lda_phi, online_lda_theta = experiments.default_sample(
-            n_dw_matrix,
-            T=2,
-            seed=42,
-            optimizer=online_default.Optimizer(
-                regularization_list,
-                sampling=2000,
-                verbose=False
-            ),
-        )
-        online_thetaless_phi, online_thetaless_theta = experiments.default_sample(
-            n_dw_matrix,
-            T=2,
-            seed=42,
-            optimizer=online_thetaless.Optimizer(
-                regularization_list,
-                sampling=2000,
-                verbose=False
-            )
-        )
-        for topic_set in metrics.get_top_words(lda_phi, 10):
-            print('\n\t'.join(map(num_2_token.get, topic_set)))
-            print()
+        # print(np.argmax(thetaless_theta[:len(topic_0_indices), :2], axis=1).mean())
+        # print(np.argmax(thetaless_theta[len(topic_0_indices):, :2], axis=1).mean())
+        # print('!')
+        # for topic_set in metrics.get_top_words(thetaless_phi, 10):
+        #     print('\n\t'.join(map(num_2_token.get, topic_set)))
+        #     print()
+        # for topic_set in metrics.get_top_words(thetaless_phi, 5):
+        #     print('\n\t'.join(map(num_2_token.get, topic_set)))
+        #     print()
         print('lda')
-        print(np.sum(lda_theta[:, 1]) / np.sum(lda_theta[:, 0]))
+        # #print(np.sum(lda_theta[:, 1]) / np.sum(lda_theta[:, 0]))
+        # print(np.argmax(lda_theta, axis=1).mean())
+        print(metrics.calc_avg_top_words_jaccards(lda_phi, 20))
         print('thetaless')
-        print(np.sum(thetaless_theta[:, 1]) / np.sum(thetaless_theta[:, 0]))
-        print('online_lda')
-        print(np.sum(online_lda_theta[:, 1]) / np.sum(online_lda_theta[:, 0]))
-        print('online_thetaless')
-        print(np.sum(online_thetaless_theta[:, 1]) / np.sum(online_thetaless_theta[:, 0]))
-        print()
+        # #print(np.sum(thetaless_theta[:, 1]) / np.sum(thetaless_theta[:, 0]))
+        # print(np.argmax(thetaless_theta, axis=1).mean())
+        print(metrics.calc_avg_top_words_jaccards(thetaless_phi, 20))
         print()
