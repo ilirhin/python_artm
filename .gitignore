@@ -5,3 +5,4 @@ dist/
 *.egg-info/
 **/old/
 *.so
+pyartm_datasets/pyartm_datasets/resources/

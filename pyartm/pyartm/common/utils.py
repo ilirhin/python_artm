@@ -5,6 +5,17 @@ import numpy as np
 import scipy.sparse
 
 from pyartm import EPS
+from numba import jit
+
+
+@jit(nopython=True)
+def _get_docptr(D, indptr):
+    docptr = []
+    for doc_num in range(D):
+        docptr.extend(
+            [doc_num] * (indptr[doc_num + 1] - indptr[doc_num])
+        )
+    return np.array(docptr, dtype=np.int32)
 
 
 def get_docptr(n_dw_matrix):
@@ -12,14 +23,7 @@ def get_docptr(n_dw_matrix):
     :param n_dw_matrix:
     :return: row indices for the provided matrix
     """
-    D, W = n_dw_matrix.shape
-    docptr = []
-    indptr = n_dw_matrix.indptr
-    for doc_num in range(D):
-        docptr.extend(
-            [doc_num] * (indptr[doc_num + 1] - indptr[doc_num])
-        )
-    return np.array(docptr, dtype=np.int32)
+    return _get_docptr(n_dw_matrix.shape[0], n_dw_matrix.indptr)
 
 
 def get_prob_matrix_by_counters(counters, inplace=False):

@@ -64,13 +64,16 @@ class Optimizer(object):
         )
 
     def calc_A_matrix(
-        self, n_dw_matrix, theta_matrix, docptr, phi_matrix_tr, wordptr
+        self, n_dw_matrix, theta_matrix, docptr, phi_matrix_tr, wordptr,
+        s_data=None
     ):
+        if s_data is None:
+            s_data = self.calc_s_data(
+                theta_matrix, docptr, phi_matrix_tr, wordptr
+            )
         return scipy.sparse.csr_matrix(
             (
-                n_dw_matrix.data * self.calc_s_data(
-                    theta_matrix, docptr, phi_matrix_tr, wordptr
-                ),
+                n_dw_matrix.data * s_data,
                 n_dw_matrix.indices,
                 n_dw_matrix.indptr
             ),
