@@ -1,12 +1,8 @@
-import numpy as np
-
 from pyartm_datasets import main_cases
 from pyartm import regularizers
 from pyartm.optimizations import default, thetaless
 from pyartm.common import experiments
 from pyartm.calculations import metrics
-
-from pyartm_experiments.prevailing_topic import online_default, online_thetaless
 
 
 def print_matrix(arr):

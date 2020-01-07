@@ -6,7 +6,7 @@ from pyartm.optimizations import default, thetaless
 from pyartm.common import experiments
 from pyartm.calculations import metrics
 
-from pyartm_experiments.prevailing_topic import online_default, online_thetaless
+from pyartm_experiments.online import online_default, online_thetaless
 
 
 def print_matrix(arr):

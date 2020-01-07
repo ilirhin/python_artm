@@ -1,7 +1,9 @@
 .idea
 *.pyc
+*.pkl
 build/
 dist/
+*.ipynb_checkpoints/
 *.egg-info/
 **/old/
 *.so
