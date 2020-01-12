@@ -7,8 +7,8 @@ from pyartm_experiments.online import online_default, online_thetaless
 import manager
 
 
-ITERS_COUNT = 200
-SAMPLES = 100
+ITERS_COUNT = 50
+SAMPLES = 25
 
 
 if __name__ == '__main__':
@@ -18,8 +18,8 @@ if __name__ == '__main__':
 
     args_list = list()
     for T in [20, 50]:
-        for phi_alpha in [-0.1, 0., 0.1]:
-            for theta_alpha in [-0.1, 0., 0.1]:
+        for phi_alpha in [0., 0.01, 0.1]:
+            for theta_alpha in [0., 0.01, 0.1]:
                 regularization_list = [
                     regularizers.Additive(phi_alpha, theta_alpha)] * ITERS_COUNT
                 for batch_size in [100, 500, 1000]:

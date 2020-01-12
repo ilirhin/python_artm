@@ -35,7 +35,6 @@ class Optimizer(base.Optimizer):
         self.calc_global_theta = calc_global_theta
 
     def _run(self, n_dw_matrix, docptr, wordptr, phi_matrix, theta_matrix):
-        n_tw, n_dt = None, None
         D, _ = theta_matrix.shape
         if isinstance(self.sampling, float):
             sample_count = int(D * self.sampling)
