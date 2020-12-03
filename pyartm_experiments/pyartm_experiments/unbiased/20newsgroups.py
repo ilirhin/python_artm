@@ -22,13 +22,17 @@ if __name__ == '__main__':
 
     args_list = list()
     for T in [10, 30]:
-        for tau in [1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 3e8, 5e8]:
-            for use_old_phi in [False, True]:
+        for tau in [1e7, 1e8, 1.5e8, 2e8, 2.5e8, 3e8, 3.5e8, 4e8, 4.5e8, 5e8]:
+            for use_old_phi in [True]:  # [False, True]
                 regularization_list = [
-                    regularizers.Decorrelator(tau, use_old_phi)] * 100
+                    regularizers.Combination(
+                        regularizers.Decorrelator(tau, use_old_phi),
+                        regularizers.Additive(-0.01, -0.01),
+                    )
+                ] * 500
                 args_list.append((
                     train_n_dw_matrix, test_n_dw_matrix,
-                    default.Optimizer(regularization_list), T, 100,
+                    default.Optimizer(regularization_list), T, 10,
                     '20news_experiment/20news_{}t_{}_{}.pkl'.format(
                         T, int(tau), use_old_phi
                     )

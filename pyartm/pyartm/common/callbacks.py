@@ -160,6 +160,18 @@ class Builder(object):
         ] = lambda it, phi, theta: 1. * np.sum(theta == 0) / np.sum(theta >= 0)
         return self
 
+    def min_nonzero_phi(self):
+        self.metrics['min_nonzero_phi'] = lambda it, phi, theta: np.min(
+            phi[phi > 0]
+        )
+        return self
+
+    def min_nonzero_theta(self):
+        self.metrics['min_nonzero_theta'] = lambda it, phi, theta: np.min(
+            theta[theta > 0]
+        )
+        return self
+
     def topic_correlation(self):
         self.metrics[
             'topic_correlation'

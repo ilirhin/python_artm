@@ -38,7 +38,9 @@ def default_callback(
         .theta_sparsity() \
         .kernel_avg_size() \
         .kernel_avg_jaccard() \
-        .topic_correlation()
+        .topic_correlation() \
+        .min_nonzero_phi() \
+        .min_nonzero_theta()
     n_dw_matrix = 0.
     if train_n_dw_matrix is not None:
         builder = builder.perplexity('train_perplexity', train_n_dw_matrix)
@@ -69,7 +71,8 @@ def default_callback(
 
 def default_sample(
         train_n_dw_matrix, T, seed, optimizer,
-        init_phi_zeros=None, init_theta_zeros=None
+        init_phi_zeros=None, init_theta_zeros=None,
+        start_launch=True, finish_launch=True,
 ):
     """
     :param train_n_dw_matrix:
@@ -96,9 +99,9 @@ def default_sample(
         theta_matrix = common.get_prob_matrix_by_counters(
             theta_matrix * (init_theta_zeros > EPS)
         )
-    if optimizer.iteration_callback:
+    if start_launch and optimizer.iteration_callback:
         optimizer.iteration_callback.start_launch()
     result = optimizer.run(train_n_dw_matrix, phi_matrix, theta_matrix)
-    if optimizer.iteration_callback:
+    if finish_launch and optimizer.iteration_callback:
         optimizer.iteration_callback.finish_launch()
     return result

@@ -12,3 +12,4 @@ class Regularizer(object):
             new_r_tw, new_r_dt = regularizer(phi, theta, n_tw, n_dt)
             r_tw += new_r_tw
             r_dt += new_r_dt
+        return r_tw, r_dt
